@@ -12,7 +12,7 @@ Next, create a new YUI instance for your application and populate it with the mo
 arguments to the YUI().use() method. YUI will automatically load any dependencies required by the modules you specify.
 
 ```js
-    mockProcessor
+    Y.YUIMock
             .when('backend', 'GET')
             .respond(function (req, res) {
                 res.status = 200;
