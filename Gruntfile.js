@@ -14,9 +14,20 @@ module.exports = function (grunt) {
                     open: 'http://localhost:8000'
                 }
             }
+        },
+        uglify: {
+            dist: {
+                options: {
+                    sourceMap: true,
+                    sourceMapName: 'yui-io-mock.map'
+                },
+                files: {
+                    'yui-io-mock.min.js': ['yui-io-mock.js']
+                }
+            }
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-connect');
+//    grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-uglify');
 };

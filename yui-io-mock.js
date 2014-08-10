@@ -76,27 +76,29 @@ YUI.add('io-mock', function (Y, NAME) {
     };
 
     function XMLHttpRequestMock () {
-        this.onabort = null;
-        this.onerror = null;
-        this.onload = null;
-        this.onloadend = null;
-        this.onloadstart = null;
-        this.onprogress = null;
-        this.onreadystatechange = null;
-        this.ontimeout = null;
-        this.readyState = ReadyStates.UNSET;
-        this.response = "";
-        this.responseText = "";
-        this.responseType = "";
-        this.responseXML = null;
-        this.status = 0;
-        this.statusText = "";
-        this.timeout = 0;
+        var self = this;
+        
+        self.onabort = null;
+        self.onerror = null;
+        self.onload = null;
+        self.onloadend = null;
+        self.onloadstart = null;
+        self.onprogress = null;
+        self.onreadystatechange = null;
+        self.ontimeout = null;
+        self.readyState = ReadyStates.UNSET;
+        self.response = "";
+        self.responseText = "";
+        self.responseType = "";
+        self.responseXML = null;
+        self.status = 0;
+        self.statusText = "";
+        self.timeout = 0;
 
-        this._responseHeaders = {};
-        this._requestHeaders = {};
-        this._request = null;
-        this._response = null;
+        self._responseHeaders = {};
+        self._requestHeaders = {};
+        self._request = null;
+        self._response = null;
     }
 
     XMLHttpRequestMock.prototype._invokeOnreadystatechange = function () {
@@ -119,7 +121,8 @@ YUI.add('io-mock', function (Y, NAME) {
 
     XMLHttpRequestMock.prototype.open = function (method, url, async, user, password) {
         // TODO: replace by a real reqular expression which matches urls
-        var urlRegExp = /./;
+        var urlRegExp = /./,
+            self = this;
         if (!method || !url) {
             throw new Error('Both parameters "method" and "url" are required');
         }
@@ -129,8 +132,8 @@ YUI.add('io-mock', function (Y, NAME) {
             throw new Error('URL should has HTTP(S) format');
         }
 
-        this._request = {};
-        var req = this._request;
+        self._request = {};
+        var req = self._request;
 
         req.method = method.toUpperCase();
         req.url = url;
@@ -139,8 +142,8 @@ YUI.add('io-mock', function (Y, NAME) {
         req.password = password || '';
 
         // ready state 1
-        this.readyState = ReadyStates.OPENED;
-        this._invokeOnreadystatechange();
+        self.readyState = ReadyStates.OPENED;
+        self._invokeOnreadystatechange();
     };
 
     XMLHttpRequestMock.prototype.overrideMimeType = function (mimetype) {
@@ -231,7 +234,8 @@ YUI.add('io-mock', function (Y, NAME) {
     };
 
     XMLHttpRequestMock.prototype.setRequestHeader = function (header, value) {
-        this._request.headers = this._request.headers || {};
-        this._request.headers[header] = value;
+        var self = this;
+        self._request.headers = self._request.headers || {};
+        self._request.headers[header] = value;
     };
 }, "0.0.0", {"requires": ["io", "log"]});
