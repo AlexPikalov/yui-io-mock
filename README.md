@@ -12,22 +12,31 @@ Next, create a new YUI instance for your application and populate it with the mo
 arguments to the YUI().use() method. YUI will automatically load any dependencies required by the modules you specify.
 
 ```js
-    Y.YUIMock
-            .when('backend', 'GET')
-            .respond(function (req, res) {
-                res.status = 200;
-                res.data = '{"foo": "bar"}';
+    YUI().use('io-base', 'io-mock', function (Y) {
+            Y.IOMock
+                    .when('test', 'GET')
+                    .respond(function (req, res) {
+                        res.status = 200;
+                        res.data = '{"foo": "bar"}';
+                        console.log('invoke result factory', arguments);
+                    });
+            Y.IOMock
+                    .when('iuyo', 'GET')
+                    .passThrough();
+            Y.io('http://localhost:8000/test', {
+                on: {
+                    start: function () {console.log('start', arguments);},
+                    success: function () {console.log('ok', arguments);},
+                    failure: function () {console.error('ups', arguments);},
+                    complete: function () {console.log('complete', arguments);},
+                    end: function () {console.log('end', arguments);}
+                }
             });
-    XHR.ajax({
-        method: 'GET',
-        url: 'http://backend',
-        data: {foo: 'bar'},
-        success: function () {
-            console.log('ok!', arguments);
-        },
-        fail: function () {
-            console.log('fail!', arguments);
-        }
-    });
-
+            Y.io('http://localhost:8000/iuyo', {
+                on: {
+                    success: function () {console.log('ok ieoru', arguments);},
+                    failure: function () {console.error('ups iweur', arguments);}
+                }
+            });
+        });
 ```
