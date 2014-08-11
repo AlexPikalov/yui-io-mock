@@ -23,15 +23,18 @@ arguments to the YUI().use() method.
 
 ```js
     YUI().use('io-base', 'io-mock', function (Y) {
+            // Mock response
             Y.IOMock
-                    .when('test', 'GET')
+                    .when('/test', 'GET')
                     .respond(function (req, res) {
                         res.status = 200;
                         res.data = '{"foo": "bar"}';
                     });
+            // Use original xhr transport to make ajax-request
             Y.IOMock
-                    .when('iuyo', 'GET')
+                    .when('http://google', 'GET')
                     .passThrough();
+            // Call YUI IO service to make ajax-requests
             Y.io('http://localhost:8000/test', {
                 on: {
                     start: function () {console.log('start', arguments);},
@@ -41,10 +44,10 @@ arguments to the YUI().use() method.
                     end: function () {console.log('end', arguments);}
                 }
             });
-            Y.io('http://localhost:8000/iuyo', {
+            Y.io('http://google', {
                 on: {
-                    success: function () {console.log('ok ieoru', arguments);},
-                    failure: function () {console.error('ups iweur', arguments);}
+                    success: function () {console.log('ok google', arguments);},
+                    failure: function () {console.error('oops google', arguments);}
                 }
             });
         });
