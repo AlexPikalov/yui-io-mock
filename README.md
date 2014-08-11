@@ -58,7 +58,7 @@ arguments to the YUI().use() method.
     * `respond(resultFactory)` - defines a fake backend response for requests matching `when` conditions. `resultFactory` take two parameters:
         - `req` - request object which contains original request parameters;
         - `res` - response object. Here you can setup response parameters such as `status`, `data`, `headers` etc.
-    * `pathThrough()` - call this method to pass through the original request. In this case original XHR transport will be used.
+    * `pathThrough()` - call this method to pass through. In this case original XHR transport will be used. Use to call real backend.
 
 ## Other
 Pull requests are welcome.
