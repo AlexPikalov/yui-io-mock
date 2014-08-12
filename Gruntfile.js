@@ -46,18 +46,18 @@ module.exports = function (grunt) {
                     return 'git push origin <%= tag %>'
                 }
             }
-        },
-        replace: {
-            'version-bower': {
-
-            },
-            'version-sourcecode': {
-
-            },
-            'version-packagefile': {
-
-            }
         }
+//        replace: {
+//            'version-bower': {
+//
+//            },
+//            'version-sourcecode': {
+//
+//            },
+//            'version-packagefile': {
+//
+//            }
+//        }
     });
 
     grunt.registerTask('set-version', []);
@@ -69,13 +69,13 @@ module.exports = function (grunt) {
             grunt.task.run('shell:git.commit:"' + message + '"');
         });
 
-        grunt.registerTask('release', function (version) {
-            grunt.task.run('replace:version-bower:<%= version %>');
-            grunt.task.run('replace:version-sourcecode:<%= version %>');
-            grunt.task.run('replace:version-packagefile:<%= version %>');
-            grunt.task.run('shell:git.tag:"v<%= verion %>"');
-            grunt.task.run('shell:git.tag-push:"v<%= verion %>"');
-        });
+//        grunt.registerTask('release', function (version) {
+//            grunt.task.run('replace:version-bower:<%= version %>');
+//            grunt.task.run('replace:version-sourcecode:<%= version %>');
+//            grunt.task.run('replace:version-packagefile:<%= version %>');
+//            grunt.task.run('shell:git.tag:"v<%= verion %>"');
+//            grunt.task.run('shell:git.tag-push:"v<%= verion %>"');
+//        });
 
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-shell');
