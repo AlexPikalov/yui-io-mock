@@ -38,12 +38,12 @@ module.exports = function (grunt) {
             },
             'git.tag': {
                 command: function (tag) {
-                    return 'git tag <%= tag %>';
+                    return 'git tag ' + tag;
                 }
             },
             'git.tag-push': {
                 command: function (tag) {
-                    return 'git push origin <%= tag %>'
+                    return 'git push origin ' + tag
                 }
             }
         }
