@@ -112,16 +112,16 @@ YUI.add('io-mock', function (Y, NAME) {
     };
 
     XMLHttpRequestMock.prototype.getAllResponseHeaders = function () {
-        return this._responseHeaders;
+        return this._response.headers;
     };
 
     XMLHttpRequestMock.prototype.getResponseHeader = function (header) {
-        return this._requestHeaders[header];
+        return this._request.headers[header];
     };
 
     XMLHttpRequestMock.prototype.open = function (method, url, async, user, password) {
-        // TODO: replace by a real reqular expression which matches urls
-        var urlRegExp = /./,
+        // url regexp source http://regexlib.com/REDetails.aspx?regexp_id=96
+        var urlRegExp = /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/,
             self = this;
         if (!method || !url) {
             throw new Error('Both parameters "method" and "url" are required');
