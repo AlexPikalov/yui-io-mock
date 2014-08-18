@@ -46,36 +46,59 @@ module.exports = function (grunt) {
                     return 'git push origin ' + tag
                 }
             }
+        },
+        replace: {
+            'version-bower': {
+                src: ['bower.json'],
+                overwrite: true,
+                replacements: [{
+                    from: /"version": "\d+.\d+.\d+"/,
+                    to: function () {
+                        var version = grunt.task.current.args[0];
+                        return '"version": "' + version + '"'
+                    }
+                }]
+            },
+            'version-sourcecode': {
+                src: ['yui-io-mock.js'],
+                overwrite: true,
+                replacements: [{
+                    from: /\}, "\d+.\d+.\d+", \{/,
+                    to: function () {
+                        var version = grunt.task.current.args[0];
+                        return '}, "' + version + '", {';
+                    }
+                }]
+            },
+            'version-packagefile': {
+                src: ['package.json'],
+                overwrite: true,
+                replacements: [{
+                    from: /"version": "\d+.\d+.\d+"/,
+                    to: function () {
+                        var version = grunt.task.current.args[0];
+                        return '"version": "' + version + '"'
+                    }
+                }]
+            }
         }
-//        replace: {
-//            'version-bower': {
-//
-//            },
-//            'version-sourcecode': {
-//
-//            },
-//            'version-packagefile': {
-//
-//            }
-//        }
     });
 
     grunt.registerTask('set-version', []);
 
-        grunt.registerTask('commit', function (message) {
-            grunt.task.run('uglify:dist');
-            grunt.task.run('shell:git.add-files');
-            console.log('message', message);
-            grunt.task.run('shell:git.commit:"' + message + '"');
-        });
+    grunt.registerTask('commit', function (message) {
+        grunt.task.run('uglify:dist');
+        grunt.task.run('shell:git.add-files');
+        grunt.task.run('shell:git.commit:"' + message + '"');
+    });
 
-//        grunt.registerTask('release', function (version) {
-//            grunt.task.run('replace:version-bower:<%= version %>');
-//            grunt.task.run('replace:version-sourcecode:<%= version %>');
-//            grunt.task.run('replace:version-packagefile:<%= version %>');
-//            grunt.task.run('shell:git.tag:"v<%= verion %>"');
-//            grunt.task.run('shell:git.tag-push:"v<%= verion %>"');
-//        });
+    grunt.registerTask('release', function (version) {
+        grunt.task.run('replace:version-bower:' + version);
+        grunt.task.run('replace:version-sourcecode:' + version);
+        grunt.task.run('replace:version-packagefile:' + version);
+        grunt.task.run('shell:git.tag:v' + version);
+        grunt.task.run('shell:git.tag-push:v' + version);
+    });
 
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-shell');

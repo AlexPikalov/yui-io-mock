@@ -21,6 +21,6 @@
         "tests"
     ],
     "dependencies": {
-        "yui3": "~3.5.0"
+        "yui3": "~3.5.0 "
     }
 }
