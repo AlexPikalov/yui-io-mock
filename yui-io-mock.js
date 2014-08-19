@@ -3,7 +3,7 @@ YUI.add('io-mock', function (Y, NAME) {
         _callbacks: [],
 
         when: function (url, method) {
-            if (!url || typeof url !== 'string' || !(url.multiline && url.ignoreCase && url.global)) {
+            if (!url || (typeof url !== 'string' && !(url.multiline && url.ignoreCase && url.global))) {
                 throw new Error('URL is required and should be a string or regexp');
             }
             var callbackItem = {
